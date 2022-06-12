@@ -2,6 +2,7 @@
 	<div>
     <v-btn
       color="primary"
+      depressed
       @click="updateLoginDialog(true)"
     >
       Login

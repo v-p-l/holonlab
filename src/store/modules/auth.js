@@ -12,7 +12,8 @@ import {
 	reauthenticateWithCredential,
 	updateEmail,
 	EmailAuthProvider,
-	updatePassword
+	updatePassword,
+	getIdTokenResult
 } from "firebase/auth";
 import router from '@/router';
 
@@ -21,9 +22,9 @@ const getDefaultState = () => {
 		displayName: null,
 		email: null,
 		emailVerified: null,
-		photoURL: null,
 		uid: null,
-		providerData: []
+		providerData: [],
+		role: null,
 	}
 }
 
@@ -34,14 +35,14 @@ const auth = {
 		isLoggedIn(state) {
 			return state.uid != null;
 		},
+		userId(state) {
+			return state.uid;
+		},
 		userName(state) {
 			return state.displayName;
 		},
 		userEmail(state) {
 			return state.email;
-		},
-		userImg(state) {
-			return state.photoURL;
 		},
 		isEmailVerified(state) {
 			return state.emailVerified;
@@ -53,19 +54,24 @@ const auth = {
 				return null
 			}
 		},
+		isAdmin(state) {
+			return state.role === "admin";
+		}
 	},
 	mutations: {
 		resetState(state) {
 			Object.assign(state, getDefaultState());
 		},
 		updateUser(state, userObject) {
-			const { displayName, email, emailVerified, photoURL, uid, providerData } = userObject;
+			const { displayName, email, emailVerified, uid, providerData, reloadUserInfo } = userObject;
 			state.displayName = displayName;
 			state.email = email;
 			state.emailVerified = emailVerified;
-			state.photoURL = photoURL;
 			state.uid = uid;
 			state.providerData = providerData;
+			let customAttributes = reloadUserInfo.customAttributes;
+			let parsedCA = JSON.parse(customAttributes);
+			state.role = parsedCA.role;
 		},
 	},
 	actions: {
@@ -98,19 +104,19 @@ const auth = {
 		async registerWithEmail({ commit }, credentials) {
 			const auth = getAuth();
 			const { username, email, password } = credentials;
+			if (!username || !email || !password) throw ("Please complete the form");
 
 			return createUserWithEmailAndPassword(auth, email, password)
-				.then((res) => {
-					updateProfile(res.user, { displayName: username })
-						.then(() => {
+				.then(async (res) => {
+					return updateProfile(res.user, { displayName: username })
+						.then(async () => {
 							commit('updateUser', res.user);
+							return sendEmailVerification(res.user).catch(() => {
+								throw "An error happened while sending verification mail";
+							})
 						})
 						.catch(() => {
 							throw "An error happened while updating user";
-						})
-					sendEmailVerification(res.user)
-						.catch(() => {
-							throw "An error happened while sending verification mail";
 						})
 				})
 				.catch((err) => {
@@ -128,29 +134,28 @@ const auth = {
 					}
 				})
 		},
-		async signOutUser({ commit }) {
+		async signOutUser({ dispatch }) {
 			const auth = getAuth();
 
 			return signOut(auth)
 				.then(() => {
-					commit('resetState');
+					dispatch('utilities/resetGlobalState', null, { root: true })
 					if (router.currentRoute.name !== "Home") {
 						router.push('/');
 					}
 				})
 				.catch((err) => {
-					console.log(err)
 					switch (err.code) {
 						default:
 							throw "An error happened while signing out";
 					}
 				})
 		},
-		async onUserAuthStateChanged({ commit }) {
+		async onUserAuthStateChanged({ dispatch, commit }) {
 			const auth = getAuth();
 
-			return onAuthStateChanged(auth, (user) => {
-				user ? commit('updateUser', user) : commit('resetState')
+			return onAuthStateChanged(auth, async (user) => {
+				user ? commit('updateUser', user) : dispatch('utilities/resetGlobalState', null, { root: true })
 			})
 		},
 		async resetUserPassword(_, email) {
@@ -181,7 +186,6 @@ const auth = {
 			const auth = getAuth();
 			const { email, password } = payload;
 			const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
-			console.log(payload)
 
 			try {
 				await reauthenticateWithCredential(auth.currentUser, credential)
@@ -220,7 +224,6 @@ const auth = {
 						})
 				})
 				.catch((err) => {
-					console.log(err)
 					switch (err.code) {
 						case "auth/invalid-email":
 							throw "Invalid email";
@@ -239,14 +242,28 @@ const auth = {
 			return updateProfile(auth.currentUser, { displayName: newUserName })
 				.then(() => {
 					commit('updateUser', auth.currentUser)
-						.catch((err) => {
-							switch (err.code) {
-								default:
-									throw "An error happened";
-							}
-						})
+				})
+				.catch((err) => {
+					switch (err) {
+						default:
+							throw "An error happened";
+					}
 				})
 		},
+		async verifyUserIsAdmin() {
+			const auth = getAuth();
+			return getIdTokenResult(auth.currentUser)
+				.then((idTokenResult) => {
+					if (idTokenResult.claims.role === "admin") {
+						return true
+					} else {
+						return false
+					}
+				})
+				.catch((error) => {
+					throw error
+				});
+		}
 	}
 }
 

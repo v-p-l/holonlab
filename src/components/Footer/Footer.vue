@@ -1,8 +1,8 @@
 <template>
-  <v-footer app inset absolute>
-    <v-col cols="12">
-      2022 — <strong>Vuetify</strong>
-    </v-col>
+  <v-footer app inset absolute color="background">
+    <div class="d-flex flex-row justify-end flex-grow-1">
+      <div>2022 — <strong>Holonlab</strong></div>
+    </div>
   </v-footer>
 </template>
 

@@ -21,7 +21,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="dialog = false">Cancel</v-btn>
-        <v-btn color="primary" class="mb-1" @click="handleEmailVerification()">
+        <v-btn color="primary" depressed class="mb-1" @click="handleEmailVerification()">
           <span v-if="!loading">Send</span>
           <IconLoading v-if="loading" />
         </v-btn>

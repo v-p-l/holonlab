@@ -1,11 +1,9 @@
 <template>
-  <v-fade-transition mode="out-in">
-    <v-icon
-      @click="toggleDarkMode()"
-    >
+  <v-btn icon @click="toggleDarkMode()">
+    <v-icon>
       {{ darkMode ? "mdi-weather-sunny" : "mdi-weather-night" }}
     </v-icon>
-  </v-fade-transition>
+  </v-btn>
 </template>
 
 <script>

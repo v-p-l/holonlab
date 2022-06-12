@@ -1,20 +1,15 @@
 <template>
-  <v-card flat class="py-4 px-6">
+  <v-card flat color="cards" class="py-4 px-6">
     <v-row>
       <v-col cols="12" sm="6">
-        <v-card outlined class="pa-4">
+        <v-card class="pa-4">
           <v-row no-gutters class="justify-space-between mb-4">
             <v-avatar tile size="80" class="ma-0" color="primary">
-              <v-img
-                v-if="userProvider === 'google.com'"
-                referrerpolicy="no-referrer"
-                :src="userImg"
-              ></v-img>
-              <v-icon v-if="userProvider === 'password'" x-large color="white"
+              <v-icon x-large color="white"
                 >mdi-account</v-icon
               >
             </v-avatar>
-            <div class="text-overline">User</div>
+            <div class="text-overline">Utilisateur</div>
           </v-row>
           <div class="text-h5">{{ userName }}</div>
           <v-row no-gutters>
@@ -22,10 +17,10 @@
               v-if="isEmailVerified"
               :color="'success'"
               :mdi="'check-circle'"
-              text="Email verified"
+              text="Email vérifié"
             />
-            <IconWithTooltip v-else :mdi="'alert'" text="Email not verified" />
-            <span>{{ userEmail }}</span>
+            <IconWithTooltip v-else :mdi="'alert'" text="Email non vérifié" />
+            <span>{{ userEmail.length > 22 ? userEmail.slice(0,19) + "..." : userEmail }}</span>
           </v-row>
         </v-card>
       </v-col>
@@ -40,11 +35,13 @@
             dense
             hide-details
             type="text"
-            label="New username"
+            label="Nouveau pseudo"
             class="mr-2"
           ></v-text-field>
           <v-btn
             color="primary"
+            depressed
+            :disabled="!newUserName"
             @click="handleUpdateUserName(newUserName)"
           >
             <v-icon v-if="!loading">mdi-pencil</v-icon>
@@ -58,11 +55,11 @@
             outlined
             dense
             type="text"
-            label="New email"
+            label="Nouvel email"
             hide-details
             class="mr-2"
           ></v-text-field>
-          <ButtonEditEmail :newEmail="newUserEmail" />
+          <ButtonEditEmail :disabled="!newUserEmail" :newEmail="newUserEmail" />
         </div>
         <small v-if="error.length > 0" class="px-5 red--text">{{
           error
@@ -109,7 +106,6 @@ export default {
   computed: {
     ...mapGetters("auth", [
       "userEmail",
-      "userImg",
       "userName",
       "userProvider",
       "isEmailVerified",
@@ -122,10 +118,12 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch("auth/updateUserName", newUserName);
+        this.$toast.success("Username modifié !");
         this.loading = false;
       } catch (error) {
+        this.$toast.error("a");
         this.loading = false;
-        this.error = error;
+        console.log(error)
       }
     },
   },

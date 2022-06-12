@@ -6,51 +6,97 @@ import store from "@/store"
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-		component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue')
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
-  },
+	{
+		path: '/',
+		name: 'Home',
+		component: () => import(/* webpackChunkName: "Home" */ '@/views/Home/Home.vue'),
+		meta: {
+			title: "Home"
+		}
+	},
+	{
+		path: '/pca',
+		name: 'Cards',
+		component: () => import(/* webpackChunkName: "Cards" */ '@/views/Cards/Cards.vue'),
+		meta: {
+			title: "PCA Tracker"
+		}
+	},
+	{
+		path: "/pca/:card_id",
+		name: "CardSingle",
+		component: () => import(/* webpackChunkName: "CardSingle" */ '@/views/Cards/CardSingle.vue'),
+		meta: {
+			title: "Carte"
+		}
+	},
+	{
+		path: '/about',
+		name: 'About',
+		component: () => import(/* webpackChunkName: "About" */ '@/views/About/About.vue'),
+		meta: {
+			title: "À propos"
+		}
+	},
 	{
 		path: "/settings",
-		name: "settings",
-		component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings/Settings.vue'),
+		name: "Settings",
+		component: () => import(/* webpackChunkName: "Settings" */ '@/views/Settings/Settings.vue'),
 		meta: {
+			title: "Settings",
 			requiredAuth: true
 		}
 	},
 	{
-		path: "/auth",
-		name: "auth",
-		component: () => import(/* webpackChunkName: "Authenticated" */ '@/views/Authenticated.vue'),
+		path: "/favorites",
+		name: "Favorites",
+		component: () => import(/* webpackChunkName: "Favorites" */ '@/views/Favorites/Favorites.vue'),
 		meta: {
+			title: "Favoris",
 			requiredAuth: true,
 			requiredMailVerified: true
 		}
 	},
-  {
-    path: '/error',
-    name: 'error',
-    component: () => import(/* webpackChunkName: "error" */ '@/views/Error.vue'),
-    meta: {
-      layout: 'blank',
-    },
-  },
-  {
-    path: '*',
-    redirect: 'error',
-  },
+	{
+		path: "/notifications",
+		name: "Notifications",
+		component: () => import(/* webpackChunkName: "Notifications" */ '@/views/Notifications/Notifications.vue'),
+		meta: {
+			title: "Notifications",
+			requiredAuth: true,
+			requiredMailVerified: true
+		}
+	},
+	{
+		path: "/admin",
+		name: "Admin",
+		component: () => import(/* webpackChunkName: "Admin" */ '@/views/Admin/Admin.vue'),
+		meta: {
+			title: "Admin",
+			requiredAuth: true,
+			requiredMailVerified: true,
+			requiredAdmin: true
+		}
+	},
+	{
+		path: '/error',
+		name: 'error',
+		component: () => import(/* webpackChunkName: "error" */ '@/views/Error/Error.vue'),
+		meta: {
+			title: "Erreur",
+			layout: 'blank',
+		},
+	},
+	{
+		path: '*',
+		redirect: 'error',
+	},
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 })
 
 const getCurrentUser = () => {
@@ -67,11 +113,21 @@ const getCurrentUser = () => {
 }
 
 router.beforeEach(async (to, from, next) => {
+	document.title = to.meta.title + " - Holonlab";
 	if (to.meta.requiredAuth) {
 		if (await getCurrentUser()) {
 			if (to.meta.requiredMailVerified) {
 				if (store.getters["auth/isEmailVerified"]) {
 					next();
+					if (to.meta.requiredAdmin) {
+						if (store.getters["auth/isAdmin"]) {
+							next();
+						} else {
+							next(from);
+						}
+					} else {
+						next();
+					}
 				} else {
 					next(from);
 					store.commit('dialogs/updateVerifyEmailDialog', true)

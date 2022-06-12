@@ -1,28 +1,24 @@
 <template>
-  <v-app-bar app clipped-left>
-    <v-app-bar-nav-icon @click="updateNavBar()"></v-app-bar-nav-icon>
-    <v-img
-      :src="require('@/assets/logo.svg')"
-      max-height="30px"
-      max-width="30px"
-      alt="logo"
-      contain
-    ></v-img>
+  <v-app-bar app flat color="background">
+    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="updateNavBar()"></v-app-bar-nav-icon>
     <v-spacer></v-spacer>
-    <ThemeSwitcher class="mr-4" />
+    <Notifications v-if="isLoggedIn" />
+    <ThemeSwitcher class="mr-2" />
     <ButtonLogin v-if="!isLoggedIn" />
     <UserMenu v-if="isLoggedIn" />
   </v-app-bar>
 </template>
 
 <script>
-import ThemeSwitcher from "@/components/ThemeSwitcher/ThemeSwitcher.vue";
+import Notifications from "@/components/AppBar/Notifications.vue";
+import ThemeSwitcher from "@/components/AppBar/ThemeSwitcher.vue";
 import UserMenu from "@/components/AppBar/UserMenu.vue";
 import ButtonLogin from "@/components/AppBar/ButtonLogin.vue";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
+    Notifications,
     ThemeSwitcher,
     UserMenu,
     ButtonLogin,

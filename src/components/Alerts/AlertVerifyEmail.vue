@@ -1,21 +1,21 @@
 <template>
-  <v-container v-if="alertWarning">
-    <v-alert
-      v-model="alertWarning"
-      icon="mdi-alert"
-      type="warning"
-			class="mb-0"
-      dismissible
+  <v-alert
+    v-if="alertWarning"
+    v-model="alertWarning"
+    icon="mdi-alert"
+    type="warning"
+    class="mb-0"
+    width="100%"
+    dismissible
+  >
+    N'oubliez pas de
+    <a
+      class="text-decoration-underline cursor-pointer white--text"
+      @click="updateVerifyEmailDialog(true)"
+      >vérifier votre email</a
     >
-      Don't forget to
-      <a
-        class="text-decoration-underline cursor-pointer white--text"
-        @click="updateVerifyEmailDialog(true)"
-        >verify your email</a
-      >
-      to access some functionnalities.
-    </v-alert>
-  </v-container>
+    pour accéder à certaines fonctionnalités.
+  </v-alert>
 </template>
 
 <script>
@@ -28,8 +28,7 @@ export default {
       alertWarning: true,
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     ...mapMutations("dialogs", ["updateVerifyEmailDialog"]),
   },

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" v-bind="attrs" v-on="on">
+      <v-btn color="primary" depressed :disabled="disabled" v-bind="attrs" v-on="on">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </template>
@@ -34,6 +34,7 @@
         <v-btn text @click="dialog = false">Cancel</v-btn>
         <v-btn
           :disabled="password.length === 0"
+          depressed
           color="primary"
           @click="handleEditEmail(newEmail, password)"
         >
@@ -55,6 +56,7 @@ export default {
   },
 	props: {
 		newEmail: String,
+    disabled: Boolean,
 	},
   data() {
     return {

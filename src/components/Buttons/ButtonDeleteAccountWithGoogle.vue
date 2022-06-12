@@ -2,28 +2,27 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="error" outlined v-bind="attrs" v-on="on">
-        <v-icon class="mr-2">mdi-delete</v-icon>
-        <span>Delete account</span>
+        <span>Supprimer le compte</span>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-				<v-icon class="mr-2">mdi-delete</v-icon>
-				<span>Delete account</span>
+				<v-icon class="mr-2">mdi-delete-outline</v-icon>
+				<span>Supprimer le compte</span>
 			</v-card-title>
       <v-card-text>
-        Are you sure you want to <b>delete your account</b>? You will lose all the data
-        related to it.<br />As a <b>security measure</b>, you will need to reauthenticate with Google.
+       Êtes-vous sûr de vouloir <b>supprimer votre compte</b>? Vous perdrez toutes les données associées.<br />Comme <b>mesure de sécurité</b>, vous devez vous reconnecter avec votre compte Google.
       </v-card-text>
       <small v-if="error.length > 0" class="px-6 red--text">{{ error }}</small>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
-        <v-btn text @click="dialog = false">Cancel</v-btn>
+        <v-btn text @click="dialog = false">Annuler</v-btn>
         <v-btn
           color="error"
+          depressed
           @click="handleDeleteUser()"
         >
-          <span v-if="!loading">Delete</span>
+          <span v-if="!loading">Supprimer</span>
 					<IconLoading v-else />
         </v-btn>
       </v-card-actions>

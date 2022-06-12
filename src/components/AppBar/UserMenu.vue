@@ -1,48 +1,31 @@
 <template>
-  <v-menu
-    offset-y
-    left
-    nudge-bottom="14"
-    min-width="230"
-    content-class="user-profile-menu-content"
-  >
+  <v-menu offset-y left max-width="230">
     <template v-slot:activator="{ on, attrs }">
       <v-badge bottom color="success" overlap offset-x="11" offset-y="11" dot>
-        <v-avatar v-if="userImg" size="40px" v-bind="attrs" v-on="on">
-          <v-img referrerpolicy="no-referrer" :src="userImg"></v-img>
-        </v-avatar>
-        <v-btn v-else small fab color="primary" v-bind="attrs" v-on="on">
-          <v-icon>mdi-account</v-icon>
+        <v-btn small depressed fab color="primary" v-bind="attrs" v-on="on">
+          <span v-if="userName" style="font-size: 18px">{{
+            userName.slice(0, 1)
+          }}</span>
         </v-btn>
       </v-badge>
     </template>
-    <v-list>
+    <v-list class="py-0">
       <!-- User -->
-      <div class="d-flex flex-column pb-3 pt-3 px-4">
-        <div class="d-flex flex-row justify-center mb-3">
-          <v-badge
-            bottom
-            color="success"
-            overlap
-            offset-x="11"
-            offset-y="11"
-            dot
-          >
-            <v-avatar v-if="userImg" size="40px">
-              <v-img referrerpolicy="no-referrer" :src="userImg"></v-img>
-            </v-avatar>
-            <v-btn v-else small fab color="primary">
-              <v-icon>mdi-account</v-icon>
-            </v-btn>
-          </v-badge>
-        </div>
+      <div class="d-flex flex-column py-4 px-4">
         <span class="text--primary font-weight-semibold">
           {{ userName }}
         </span>
         <div class="d-flex flex-row">
-					<IconWithTooltip v-if="isEmailVerified" :color="'success'" :mdi="'check-circle'" text="Email verified" />
-					<IconWithTooltip v-else :mdi="'alert'" text="Email not verified" />
-          <small class="text--disabled">{{ userEmail }}</small>
+          <IconWithTooltip
+            v-if="isEmailVerified"
+            :color="'success'"
+            :mdi="'check-circle'"
+            text="Email verified"
+          />
+          <IconWithTooltip v-else :mdi="'alert'" text="Email not verified" />
+          <small v-if="userEmail" class="text--disabled">{{
+            userEmail.length > 28 ? userEmail.slice(0, 25) + "..." : userEmail
+          }}</small>
         </div>
       </div>
 
@@ -79,27 +62,22 @@ import IconWithTooltip from "@/components/Icons/IconWithTooltip.vue";
 
 export default {
   components: {
-		IconWithTooltip
-	},
+    IconWithTooltip,
+  },
   data() {
     return {};
   },
   computed: {
-    ...mapGetters("auth", [
-      "userImg",
-      "userName",
-      "userEmail",
-      "isEmailVerified",
-    ]),
+    ...mapGetters("auth", ["userName", "userEmail", "isEmailVerified"]),
   },
   methods: {
     ...mapActions("utilities", ["resetGlobalState"]),
     async handleSignOut() {
       try {
-				await this.$store.dispatch("auth/signOutUser");
-			} catch (err) {
-				console.log(err);
-			}
+        await this.$store.dispatch("auth/signOutUser");
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

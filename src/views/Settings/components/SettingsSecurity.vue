@@ -1,20 +1,28 @@
 <template>
-  <v-card flat class="py-4 px-6">
+  <v-card flat color="cards" class="pt-4 pb-6 px-6">
     <div>
       <v-row>
         <v-col cols="12" sm="6">
-          <v-card outlined class="pa-4">
+          <v-card class="pa-4">
             <v-row no-gutters class="justify-space-between mb-4">
               <v-avatar tile size="80" class="ma-0" color="primary">
                 <v-icon x-large color="white">mdi-lock-outline</v-icon>
               </v-avatar>
-              <div class="text-overline">Provider</div>
+              <div class="text-overline">Fournisseur</div>
             </v-row>
-            <div v-if="userProvider === 'google.com'" class="text-h5">Google</div>
-						<div v-if="userProvider === 'password'" class="text-h5">Email/password</div>
+            <div v-if="userProvider === 'google.com'" class="text-h5">
+              Google
+            </div>
+            <div v-if="userProvider === 'password'" class="text-h5">
+              Email/mot de passe
+            </div>
             <v-row no-gutters>
-              <span v-if="userProvider === 'google.com'">Authenticated using Google provider.</span>
-							<span v-if="userProvider === 'password'">Authenticated using email and password.</span>
+              <span v-if="userProvider === 'google.com'"
+                >Authentifié via Google.</span
+              >
+              <span v-if="userProvider === 'password'"
+                >Authentifié avec email et mot de passe.</span
+              >
             </v-row>
           </v-card>
         </v-col>
@@ -24,7 +32,7 @@
             outlined
             dense
             :type="isCurrentPasswordVisible ? 'text' : 'password'"
-            label="Current Password"
+            label="Mot de passe actuel"
             placeholder="············"
             :append-icon="
               isCurrentPasswordVisible
@@ -40,7 +48,7 @@
             outlined
             dense
             :type="isNewPasswordVisible ? 'text' : 'password'"
-            label="New Password"
+            label="Nouveau mot de passe"
             placeholder="············"
             :append-icon="
               isNewPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
@@ -54,7 +62,7 @@
             outlined
             dense
             :type="isConfirmPasswordVisible ? 'text' : 'password'"
-            label="Confirm New Password"
+            label="Confirmer le nouveau mot de passe"
             placeholder="············"
             :append-icon="
               isConfirmPasswordVisible
@@ -70,14 +78,15 @@
               <v-btn
                 color="primary"
                 class="mb-1"
+                depressed
                 :disabled="!isConfirmPasswordValid"
                 @click="handleUpdatePassword(currentPassword, newPassword)"
               >
-                <span v-if="!loading">Update password</span>
+                <span v-if="!loading">Modifier le mot de passe</span>
                 <IconLoading v-else />
               </v-btn>
               <small v-if="success" class="green--text"
-                >Password successfully updated!</small
+                >Mot de passe modifié!</small
               >
               <small v-if="error.length > 0" class="red--text">{{
                 error
@@ -124,6 +133,10 @@ export default {
   },
   methods: {
     ...mapMutations("auth", ["updateUser"]),
+    ...mapMutations("dialogs", [
+      "updateLoginDialog",
+      "updateForgotPasswordDialog",
+    ]),
     async handleUpdatePassword(currentPw, newPw) {
       this.loading = true;
       this.success = false;
