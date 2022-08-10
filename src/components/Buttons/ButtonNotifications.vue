@@ -1,9 +1,10 @@
 <template>
-  <v-menu offset-y bottom left max-width="250">
+  <v-menu offset-y bottom left min-width="250" max-width="250">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         v-bind="attrs"
         v-on="on"
+        small
         icon
         @click="handleSetNewNotificationsToFalse()"
       >

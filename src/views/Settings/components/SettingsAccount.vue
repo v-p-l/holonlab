@@ -20,7 +20,7 @@
               text="Email vérifié"
             />
             <IconWithTooltip v-else :mdi="'alert'" text="Email non vérifié" />
-            <span>{{ userEmail.length > 22 ? userEmail.slice(0,19) + "..." : userEmail }}</span>
+            <span>{{ userEmail }}</span>
           </v-row>
         </v-card>
       </v-col>

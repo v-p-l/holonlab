@@ -50,36 +50,34 @@
       </ButtonFilters>
     </div>
     <!-- Cards -->
-    <div>
-      <div v-if="loading" class="d-flex flex-row justify-center">
-        <IconLoading :color="'primary'"></IconLoading>
-      </div>
-      <div
-        v-else
-        class="d-flex flex-row justify-center flex-wrap mb-4"
-        style="gap: 16px"
-      >
-        <CardPop
-          v-for="(card, i) in cards"
-          :key="i"
-          :data="card"
-          redirect
-          showLastUpdate
-          @actionFavorite="handleFavorite"
-        ></CardPop>
-      </div>
+    <div v-if="loading" class="d-flex flex-row justify-center">
+      <IconLoading :color="'primary'"></IconLoading>
     </div>
+    <div
+      v-else
+      class="d-flex flex-row justify-center flex-wrap mb-4"
+      style="gap: 16px"
+    >
+      <CardPop
+        v-for="(card, i) in cards"
+        :key="i"
+        :data="card"
+        redirect
+        showLastUpdate
+        @actionFavorite="handleFavorite"
+      ></CardPop>
+    </div>
+    <!-- Load more -->
     <div
       v-if="!loading && cards.length % 9 === 0 && cards.length > 0 && next"
       class="d-flex flex-row justify-center"
     >
-      <v-btn
-        @click="loadMore()"
-        :loading="loadingMore"
-        depressed
+      <ButtonDefault
+        text="Voir plus"
         color="primary"
-        >Voir plus</v-btn
-      >
+        :loading="loadingMore"
+        @action="loadMore()"
+      ></ButtonDefault>
     </div>
   </div>
 </template>
@@ -98,6 +96,8 @@ import SearchBar from "@/components/SearchBar/SearchBar.vue";
 import ButtonFilters from "@/components/Buttons/ButtonFilters.vue";
 import IconLoading from "@/components/Icons/IconLoading.vue";
 import CardPop from "@/components/Cards/CardPop.vue";
+import ButtonDefault from "@/components/Buttons/ButtonDefault.vue";
+
 export default {
   name: "Cards",
   components: {
@@ -105,6 +105,7 @@ export default {
     ButtonFilters,
     IconLoading,
     CardPop,
+    ButtonDefault
   },
   data() {
     return {
@@ -194,7 +195,7 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     this.getDataFromApi();
   },
   methods: {
@@ -227,7 +228,6 @@ export default {
         this.cards.push(...res.cards);
         this.next = res.nextQuery;
         this.loadingMore = false;
-        console.log(res);
       } catch (err) {
         this.loadingMore = false;
         console.log(err);

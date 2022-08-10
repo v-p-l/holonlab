@@ -8,7 +8,7 @@
               <v-avatar tile size="80" class="ma-0" color="primary">
                 <v-icon x-large color="white">mdi-lock-outline</v-icon>
               </v-avatar>
-              <div class="text-overline">Fournisseur</div>
+              <div class="text-overline">Auth.</div>
             </v-row>
             <div v-if="userProvider === 'google.com'" class="text-h5">
               Google

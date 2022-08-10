@@ -3,28 +3,31 @@
     <v-card>
       <v-card-title>
         <v-icon class="mr-2">mdi-alert</v-icon>
-        <span>Verify your email</span>
+        <span>Vérifiez votre email</span>
       </v-card-title>
 
       <v-card-text class="pb-0"
-        ><span>We have sent a verification mail to <b>{{ userEmail }}</b
-        >.<br />If you haven't received anything yet, you can
-        <b>request a new one</b> below.</span>
+        ><span
+          >Nous vous avons envoyé un mail à <b>{{ userEmail }}</b> à la création
+          de votre compte.<br />Si vous n'avez rien reçu, vous pouvez en
+          redemander un à nouveau.</span
+        >
       </v-card-text>
 
-			<v-card-text class="pb-0" v-if="error.length > 0">
-        <small class="red--text">{{
-          error
-        }}</small>
-			</v-card-text>
+      <v-card-text class="pb-0" v-if="error.length > 0">
+        <small class="red--text">{{ error }}</small>
+      </v-card-text>
 
-      <v-card-actions>
+      <v-card-actions class="pb-4">
         <v-spacer></v-spacer>
-        <v-btn text @click="dialog = false">Cancel</v-btn>
-        <v-btn color="primary" depressed class="mb-1" @click="handleEmailVerification()">
-          <span v-if="!loading">Send</span>
-          <IconLoading v-if="loading" />
-        </v-btn>
+        <v-btn text @click="dialog = false">Annuler</v-btn>
+        <ButtonDefault
+          text="Demander"
+          color="primary"
+          :loading="loading"
+          @action="handleEmailVerification()"
+          class="mt-2"
+        ></ButtonDefault>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -32,11 +35,11 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import IconLoading from "@/components/Icons/IconLoading.vue";
+import ButtonDefault from "@/components/Buttons/ButtonDefault.vue";
 
 export default {
   components: {
-    IconLoading,
+    ButtonDefault,
   },
   data() {
     return {

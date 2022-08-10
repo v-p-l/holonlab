@@ -1,26 +1,37 @@
 <template>
   <v-app-bar app flat color="background">
-    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="updateNavBar()"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon
+      v-if="$vuetify.breakpoint.smAndDown"
+      class="mr-2"
+      @click="updateNavBar()"
+    ></v-app-bar-nav-icon>
+    <Logo v-if="$vuetify.breakpoint.smAndDown"></Logo>
     <v-spacer></v-spacer>
-    <Notifications v-if="isLoggedIn" />
-    <ThemeSwitcher class="mr-2" />
-    <ButtonLogin v-if="!isLoggedIn" />
-    <UserMenu v-if="isLoggedIn" />
+    <div class="d-flex flex-row align-center" :style="isLoggedIn ? { 'gap': '8px' } : { '': '' }">
+      <ButtonNotifications v-if="isLoggedIn" />
+      <ButtonThemeSwitcher />
+      <div class="ml-4">
+        <ButtonLogin v-if="!isLoggedIn" />
+        <ButtonUserMenu v-if="isLoggedIn" />
+      </div>
+    </div>
   </v-app-bar>
 </template>
 
 <script>
-import Notifications from "@/components/AppBar/Notifications.vue";
-import ThemeSwitcher from "@/components/AppBar/ThemeSwitcher.vue";
-import UserMenu from "@/components/AppBar/UserMenu.vue";
-import ButtonLogin from "@/components/AppBar/ButtonLogin.vue";
+import Logo from "@/components/Logo/Logo.vue";
+import ButtonNotifications from "@/components/Buttons/ButtonNotifications.vue";
+import ButtonThemeSwitcher from "@/components/Buttons/ButtonThemeSwitcher.vue";
+import ButtonLogin from "@/components/Buttons/ButtonLogin.vue";
+import ButtonUserMenu from "@/components/Buttons/ButtonUserMenu.vue";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
-    Notifications,
-    ThemeSwitcher,
-    UserMenu,
+    Logo,
+    ButtonNotifications,
+    ButtonThemeSwitcher,
+    ButtonUserMenu,
     ButtonLogin,
   },
   data() {
@@ -30,7 +41,7 @@ export default {
     ...mapGetters("auth", ["isLoggedIn"]),
   },
   methods: {
-		...mapMutations("utilities", ["updateNavBar"]),
+    ...mapMutations("utilities", ["updateNavBar"]),
   },
 };
 </script>

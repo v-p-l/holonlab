@@ -1,10 +1,10 @@
 <template>
   <v-card min-width="250px" max-width="320px" color="cards">
-    <v-row no-gutters class="py-2 px-4">
+    <div class="d-flex flex-row py-2 px-4">
       <div class="d-flex flex-column flex-grow-1">
         <div class="d-flex flex-row justify-space-between align-center">
           <v-card-title class="pa-0">{{ data.name.length > 25 ? data.name.slice(0,22) + "..." : data.name }}</v-card-title>
-          <v-btn :disabled="!isLoggedIn" small icon @click="emitFavorite()">
+          <v-btn :disabled="!isLoggedIn || !isEmailVerified" small icon @click="emitFavorite()">
             <v-icon :color="isFavorite ? 'red' : ''"
               >mdi-{{ isFavorite ? "heart" : "heart-outline" }}</v-icon
             >
@@ -16,8 +16,8 @@
           >
         </div>
       </div>
-    </v-row>
-    <v-row no-gutters class="d-flex flex-row flex-nowrap px-4 pb-4">
+    </div>
+    <div class="d-flex flex-row flex-nowrap px-4 pb-4">
       <v-img
         v-if="data.imgURL !== 'null'"
         max-width="100px"
@@ -70,7 +70,7 @@
           </v-tooltip>
         </div>
       </div>
-    </v-row>
+    </div>
   </v-card>
 </template>
 <script>
@@ -99,7 +99,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("auth", ["isLoggedIn"]),
+    ...mapGetters("auth", ["isLoggedIn", "isEmailVerified"]),
     isFavorite: {
       get() {
         return this.data.isFavorite;

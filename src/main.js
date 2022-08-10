@@ -11,7 +11,6 @@ import firebaseConfig from "@/plugins/firebase/firebaseConfig";
 import axios from 'axios';
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-console.log(axios.defaults.baseURL)
 // axios.defaults.baseURL = "http://localhost:5001/holonlab-4e280/us-central1";
 Vue.prototype.$api = axios;
 

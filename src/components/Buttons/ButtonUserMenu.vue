@@ -1,31 +1,17 @@
 <template>
-  <v-menu offset-y left max-width="230">
+  <v-menu offset-y bottom left min-width="250" max-width="250">
     <template v-slot:activator="{ on, attrs }">
-      <v-badge bottom color="success" overlap offset-x="11" offset-y="11" dot>
-        <v-btn small depressed fab color="primary" v-bind="attrs" v-on="on">
-          <span v-if="userName" style="font-size: 18px">{{
-            userName.slice(0, 1)
-          }}</span>
-        </v-btn>
-      </v-badge>
+      <v-btn small depressed fab color="primary" v-bind="attrs" v-on="on">
+        <v-icon>{{ "mdi-account" }}</v-icon>
+      </v-btn>
     </template>
     <v-list class="py-0">
       <!-- User -->
-      <div class="d-flex flex-column py-4 px-4">
-        <span class="text--primary font-weight-semibold">
+      <div class="d-flex flex-row justify-center py-4 px-4">
+        <div
+          class="d-flex flex-row justify-center text--primary font-weight-bold"
+        >
           {{ userName }}
-        </span>
-        <div class="d-flex flex-row">
-          <IconWithTooltip
-            v-if="isEmailVerified"
-            :color="'success'"
-            :mdi="'check-circle'"
-            text="Email verified"
-          />
-          <IconWithTooltip v-else :mdi="'alert'" text="Email not verified" />
-          <small v-if="userEmail" class="text--disabled">{{
-            userEmail.length > 28 ? userEmail.slice(0, 25) + "..." : userEmail
-          }}</small>
         </div>
       </div>
 
@@ -58,11 +44,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import IconWithTooltip from "@/components/Icons/IconWithTooltip.vue";
 
 export default {
   components: {
-    IconWithTooltip,
   },
   data() {
     return {};

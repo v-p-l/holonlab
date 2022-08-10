@@ -1,17 +1,19 @@
 <template>
-  <v-btn icon @click="toggleDarkMode()">
-    <v-icon>
-      {{ darkMode ? "mdi-weather-sunny" : "mdi-weather-night" }}
-    </v-icon>
-  </v-btn>
+  <ButtonDefault
+    small
+    :iconOnly="true"
+    :icon="darkMode ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+    @action="toggleDarkMode()"
+  ></ButtonDefault>
 </template>
 
 <script>
+import ButtonDefault from "@/components/Buttons/ButtonDefault.vue";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  data() {
-    return {};
+  components: {
+    ButtonDefault
   },
   computed: {
     ...mapGetters("utilities", ["darkMode"]),
