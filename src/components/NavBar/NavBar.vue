@@ -81,13 +81,13 @@ export default {
   data() {
     return {
       items: [
-        {
-          title: "Home",
-          icon: "mdi-home",
-          to: "/",
-          authRequired: false,
-          adminRequired: false,
-        },
+        // {
+        //   title: "Home",
+        //   icon: "mdi-home",
+        //   to: "/",
+        //   authRequired: false,
+        //   adminRequired: false,
+        // },
         {
           title: "PCA Tracker",
           icon: "mdi-cards",

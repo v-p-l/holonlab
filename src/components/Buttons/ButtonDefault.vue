@@ -1,7 +1,16 @@
 <template>
-  <v-btn :block="block" :color="color" :icon="iconOnly" depressed :small="small" :loading="loading" @click="$emit('action')">
+  <v-btn
+    :block="block"
+    :color="color"
+    :icon="iconOnly"
+    depressed
+    :small="small"
+    :loading="loading"
+    :to="to"
+    @click="$emit('action')"
+  >
     <span v-if="text">{{ text }}</span>
-    <v-icon v-if="icon">{{ icon }}</v-icon>
+    <v-icon v-if="icon" :class="!iconOnly ? 'ml-2' : ''">{{ icon }}</v-icon>
   </v-btn>
 </template>
 
@@ -10,11 +19,11 @@ export default {
   props: {
     text: {
       type: String,
-      default: ""
+      default: "",
     },
     icon: {
       type: String,
-      default: ""
+      default: "",
     },
     iconOnly: {
       type: Boolean,
@@ -22,20 +31,24 @@ export default {
     },
     color: {
       type: String,
-      default: ""
+      default: "",
     },
     small: {
       type: Boolean,
-      default: false
+      default: false,
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     block: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+    to: {
+      type: String,
+      default: "",
+    },
+  },
+};
 </script>

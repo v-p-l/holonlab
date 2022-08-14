@@ -27,6 +27,10 @@ export default {
       search: "",
     };
   },
+  mounted() {
+    let test = this.$store.getters['pcatracker/filters'];
+    if (test.name.length > 0) this.search = test.name;
+  },
   methods: {
     titleCase(str) {
       return str

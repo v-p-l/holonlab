@@ -15,7 +15,6 @@ import {
 	updatePassword,
 	getIdTokenResult
 } from "firebase/auth";
-import router from '@/router';
 
 const getDefaultState = () => {
 	return {
@@ -140,9 +139,6 @@ const auth = {
 			return signOut(auth)
 				.then(() => {
 					dispatch('utilities/resetGlobalState', null, { root: true })
-					if (router.currentRoute.name !== "Home") {
-						router.push('/');
-					}
 				})
 				.catch((err) => {
 					switch (err.code) {
@@ -154,8 +150,12 @@ const auth = {
 		async onUserAuthStateChanged({ dispatch, commit }) {
 			const auth = getAuth();
 
-			return onAuthStateChanged(auth, async (user) => {
-				user ? commit('updateUser', user) : dispatch('utilities/resetGlobalState', null, { root: true })
+			return onAuthStateChanged(auth, (user) => {
+				if (user) {
+					commit('updateUser', user)
+				} else {
+					dispatch('utilities/resetGlobalState', null, { root: true })
+				}
 			})
 		},
 		async resetUserPassword(_, email) {

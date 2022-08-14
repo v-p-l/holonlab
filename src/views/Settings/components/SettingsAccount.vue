@@ -2,7 +2,7 @@
   <v-card flat color="cards" class="py-4 px-6">
     <v-row>
       <v-col cols="12" sm="6">
-        <v-card class="pa-4">
+        <v-card outlined class="pa-4">
           <v-row no-gutters class="justify-space-between mb-4">
             <v-avatar tile size="80" class="ma-0" color="primary">
               <v-icon x-large color="white"
@@ -67,7 +67,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" class="d-flex flex-column align-center pb-5">
+      <v-col cols="12" :class="$vuetify.breakpoint.smAndUp ? 'd-flex flex-column align-center pb-5' : 'd-flex flex-column pb-5'">
         <ButtonDeleteAccountWithPassword v-if="userProvider === 'password'" />
         <ButtonDeleteAccountWithGoogle v-if="userProvider === 'google.com'" />
       </v-col>

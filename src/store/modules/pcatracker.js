@@ -4,6 +4,11 @@ import { collection, doc, getDoc, setDoc, updateDoc, getDocs, query, where, orde
 
 const getDefaultState = () => {
 	return {
+		filters: {
+			name: "",
+			rarity: "",
+			setName: "",
+		},
 	}
 }
 
@@ -11,8 +16,14 @@ const pcatracker = {
 	namespaced: true,
 	state: getDefaultState(),
 	getters: {
+		filters(state) {
+			return state.filters;
+		}
 	},
 	mutations: {
+		updateFilters({ state }, newFilters) {
+			state.filters = newFilters;
+		}
 	},
 	actions: {
 		async getCards({ rootGetters }, query) {
@@ -210,6 +221,9 @@ const pcatracker = {
 
 			return;
 		},
+		updateFilters({ commit }, newFilters) {
+			commit('updateFilters', newFilters);
+		}
 	}
 }
 

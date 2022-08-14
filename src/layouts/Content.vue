@@ -3,7 +3,7 @@
     <Navbar />
     <Appbar />
     <v-main>
-      <div class="d-flex flex-column justify-start align-start px-4 py-6" style="height: 100%">
+      <div class="d-flex flex-column justify-start align-start px-4 pt-2 pb-6">
         <AlertVerifyEmail v-if="isLoggedIn && !isEmailVerified" class="mb-4" />
         <slot></slot>
       </div>

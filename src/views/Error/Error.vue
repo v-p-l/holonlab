@@ -1,22 +1,31 @@
 <template>
-  <v-container>
-    <h2
-      class="
-        text-2xl
-        font-weight-semibold
-        text--primary
-        d-flex
-        align-center
-        justify-center
-      "
+  <div class="primary d-flex flex-row justify-center align-center fill-height fluid px-4" style="width: 100%;">
+    <v-card
+      height="350"
+      max-width="350"
+      outlined
+      class="d-flex flex-column justify-space-between py-4 px-6"
     >
-      <span class="me-2">Page Not Found</span>
-    </h2>
-    <p class="text-sm">we couldn't find the page you are looking for</p>
+      <div class="primary--text text-h2 font-weight-bold text-center">404</div>
+      <div class="body-1 text-center">
+        Désolé, nous n'avons pas réussi à trouver la page en question. 😥
+      </div>
 
-    <v-btn color="primary" to="/" class="mb-4"> Back to home </v-btn>
-  </v-container>
+      <ButtonDefault
+        text="Retour à holonlab"
+        color="primary"
+        to="/pca"
+      ></ButtonDefault>
+    </v-card>
+  </div>
 </template>
 
 <script>
+import ButtonDefault from "@/components/Buttons/ButtonDefault.vue";
+
+export default {
+  components: {
+    ButtonDefault,
+  },
+};
 </script>

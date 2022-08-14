@@ -7,17 +7,24 @@
         chaque fois que ses populations sont mises à jour et que de nouvelles
         données sont détectées.
       </p>
-      <p class="mb-8">Vous pouvez ajouter jusqu'à 5 cartes à vos favoris.</p>
-      <v-row no-gutters v-if="!loading" class="d-flex flex-row justify-center flex-wrap">
+      <p class="mb-4">Vous pouvez ajouter jusqu'à 5 cartes à vos favoris.</p>
+      <div
+        v-if="!loading"
+        class="d-flex flex-row justify-center flex-wrap"
+      >
         <div v-if="cards.length === 0" class="d-flex flex-row align-center">
-          <div class="caption mr-1">
-            Commencer à ajouter des cartes à vos favoris
-          </div>
-          <v-btn small icon to="/cards">
-            <v-icon>mdi-arrow-right</v-icon></v-btn
-          >
+          <ButtonDefault
+            text="Ajouter des cartes"
+            icon="mdi-arrow-right"
+            color="primary"
+            to="/pca"
+          ></ButtonDefault>
         </div>
-        <div v-else class="d-flex flex-row justify-center flex-wrap" style="gap: 16px">
+        <div
+          v-else
+          class="d-flex flex-row justify-center flex-wrap"
+          style="gap: 16px"
+        >
           <CardPop
             v-for="(card, i) in cards"
             :key="i"
@@ -27,7 +34,10 @@
             @actionFavorite="handleFavorite"
           ></CardPop>
         </div>
-      </v-row>
+      </div>
+      <div v-else class="d-flex flex-row justify-center">
+        <IconLoading color="primary"></IconLoading>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -35,10 +45,15 @@
 <script>
 import { mapActions } from "vuex";
 import CardPop from "@/components/Cards/CardPop.vue";
+import ButtonDefault from "@/components/Buttons/ButtonDefault.vue";
+import IconLoading from "@/components/Icons/IconLoading.vue";
+
 export default {
   name: "Favorites",
   components: {
     CardPop,
+    ButtonDefault,
+    IconLoading
   },
   data() {
     return {
@@ -47,7 +62,7 @@ export default {
     };
   },
   computed: {},
-  mounted() {
+  created() {
     this.getDataFromApi();
   },
   methods: {
@@ -55,15 +70,12 @@ export default {
     async getDataFromApi() {
       this.loading = true;
       try {
-        this.cards = await this.handleGetFavorites();
+        this.cards = await this.getFavorites();
         this.loading = false;
       } catch (err) {
         console.log(err);
         this.loading = false;
       }
-    },
-    async handleGetFavorites() {
-      return this.getFavorites();
     },
     async handleFavorite(cardId) {
       try {

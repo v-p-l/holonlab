@@ -1,5 +1,14 @@
 <template>
   <div class="d-flex flex-column" style="width: 100%">
+    <!-- Overlay -->
+    <v-overlay :absolute="absolute" :opacity="opacity" :value="overlay" div class="d-flex flex-row justify-center" style="position: fixed; width: 100%;">
+      <div class="d-flex flex-column justify-center align-center">
+        <v-btn color="primary" @click="overlay = false" class="mb-4">
+          Hide Overlay
+        </v-btn>
+        <v-img :src="overlayImgURL" min-width="300px" max-width="400px"></v-img>
+      </div>
+    </v-overlay>
     <!-- Search bar and filters -->
     <div class="d-flex flex-row mb-6">
       <SearchBar
@@ -11,7 +20,7 @@
         :areFiltersActive="
           Object.values(filters).some((x) => x !== null && x !== '')
         "
-        @filtersChange="handleFiltersChange"
+        @filtersChange="handleGetCards"
       >
         <template v-slot:rarity>
           <v-list-item class="mb-2">
@@ -53,8 +62,9 @@
     <div v-if="loading" class="d-flex flex-row justify-center">
       <IconLoading :color="'primary'"></IconLoading>
     </div>
+    <div v-if="!loading && error">{{ error }}</div>
     <div
-      v-else
+      v-if="!loading && !error"
       class="d-flex flex-row justify-center flex-wrap mb-4"
       style="gap: 16px"
     >
@@ -64,7 +74,9 @@
         :data="card"
         redirect
         showLastUpdate
+        :loadingFavorite="loadingFavorite"
         @actionFavorite="handleFavorite"
+        @overlay="handleOverlay"
       ></CardPop>
     </div>
     <!-- Load more -->
@@ -105,19 +117,16 @@ export default {
     ButtonFilters,
     IconLoading,
     CardPop,
-    ButtonDefault
+    ButtonDefault,
   },
   data() {
     return {
       loading: true,
+      error: "",
       loadingMore: false,
+      loadingFavorite: false,
       queryLoading: false,
       cards: [],
-      filters: {
-        name: "",
-        rarity: "",
-        setName: "",
-      },
       next: null,
       rarityOptions: [
         "Commune",
@@ -163,9 +172,23 @@ export default {
         "D&P Éveil des Légendes",
         "D&P Tempête",
       ],
+      absolute: true,
+      opacity: 0.7,
+      overlay: false,
+      overlayImgURL: "",
     };
   },
   computed: {
+    // ...mapGetters("pcatracker", ["filters"]),
+    filters: {
+      get() {
+        return this.$store.getters["pcatracker/filters"];
+      },
+      set(newValue) {
+        this.$store.dispatch("pcatracker/updateFilters", newValue);
+        this.handleGetCards();
+      },
+    },
     filterByName() {
       if (this.filters.name) {
         return this.filters.name;
@@ -196,25 +219,22 @@ export default {
     },
   },
   created() {
-    this.getDataFromApi();
+    this.handleGetCards();
   },
   methods: {
     ...mapActions("pcatracker", ["getCards", "addToFavorite"]),
-    async getDataFromApi() {
-      await this.handleGetCards();
-    },
     async handleGetCards() {
       this.loading = true;
 
-      const queryCards = this.queryCreator();
-
       try {
+        const queryCards = await this.queryCreator();
         let res = await this.getCards(queryCards);
         this.cards = res.cards;
         this.next = res.nextQuery;
         this.loading = false;
       } catch (err) {
         this.loading = false;
+        this.error = "error";
         console.log(err);
       }
     },
@@ -233,7 +253,7 @@ export default {
         console.log(err);
       }
     },
-    queryCreator() {
+    async queryCreator() {
       const name = this.filterByName;
       const rarity = this.filterByRarity;
       const setName = this.filterBySetName;
@@ -337,25 +357,32 @@ export default {
       return queryCards;
     },
     async handleSearchChange(search) {
-      this.loading = true;
       this.filters.name = search;
-      await this.handleGetCards();
-      this.loading = false;
-    },
-    async handleFiltersChange() {
-      this.loading = true;
-      await this.handleGetCards();
-      this.loading = false;
     },
     async handleFavorite(cardId) {
       try {
+        this.loadingFavorite = true;
         let res = await this.addToFavorite({ cardId });
         const cardIndex = this.cards.findIndex((card) => card.id === cardId);
         this.cards[cardIndex].isFavorite = !this.cards[cardIndex].isFavorite;
         this.$toast.success(res);
       } catch (err) {
         this.$toast.error(err);
+      } finally {
+        this.loadingFavorite = false;
       }
+    },
+    handleOverlay(value) {
+      this.overlayImgURL = value;
+      this.overlay = true;
+    },
+  },
+  watch: {
+    filters: {
+      handler() {
+        this.handleGetCards();
+      },
+      deep: true,
     },
   },
 };

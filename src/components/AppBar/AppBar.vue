@@ -12,7 +12,7 @@
       <ButtonThemeSwitcher />
       <div class="ml-4">
         <ButtonLogin v-if="!isLoggedIn" />
-        <ButtonUserMenu v-if="isLoggedIn" />
+        <ButtonUserMenu v-else />
       </div>
     </div>
   </v-app-bar>

@@ -3,7 +3,7 @@
     <div>
       <v-row>
         <v-col cols="12" sm="6">
-          <v-card class="pa-4">
+          <v-card outlined class="pa-4">
             <v-row no-gutters class="justify-space-between mb-4">
               <v-avatar tile size="80" class="ma-0" color="primary">
                 <v-icon x-large color="white">mdi-lock-outline</v-icon>
@@ -74,7 +74,7 @@
             @click:append="isConfirmPasswordVisible = !isConfirmPasswordVisible"
           ></v-text-field>
           <v-row>
-            <v-col cols="12" class="d-flex flex-column align-end">
+            <v-col cols="12" class="d-flex flex-column">
               <v-btn
                 color="primary"
                 class="mb-1"

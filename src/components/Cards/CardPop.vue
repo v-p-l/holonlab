@@ -3,17 +3,27 @@
     <div class="d-flex flex-row py-2 px-4">
       <div class="d-flex flex-column flex-grow-1">
         <div class="d-flex flex-row justify-space-between align-center">
-          <v-card-title class="pa-0">{{ data.name.length > 25 ? data.name.slice(0,22) + "..." : data.name }}</v-card-title>
-          <v-btn :disabled="!isLoggedIn || !isEmailVerified" small icon @click="emitFavorite()">
+          <v-card-title class="pa-0">{{
+            data.name.length > 25 ? data.name.slice(0, 22) + "..." : data.name
+          }}</v-card-title>
+          <v-btn
+            :disabled="!isLoggedIn || !isEmailVerified || loadingFavorite"
+            small
+            icon
+            @click="emitFavorite()"
+          >
             <v-icon :color="isFavorite ? 'red' : ''"
               >mdi-{{ isFavorite ? "heart" : "heart-outline" }}</v-icon
             >
           </v-btn>
         </div>
-        <div class="d-flex flex-row justify-start">
-          <v-card-subtitle class="pa-0"
-            >{{ cardSubtitle.length > 36 ? cardSubtitle.slice(0,33) + "..." : cardSubtitle }}</v-card-subtitle
-          >
+        <div class="d-flex flex-row align-center" style="gap: 4px">
+          <IconRarity :rarity="data.rarity"></IconRarity>
+          <div class="caption">
+            {{
+              data.setNumber + "/" + data.totalSetNumber + ", " + data.setName
+            }}
+          </div>
         </div>
       </div>
     </div>
@@ -22,6 +32,7 @@
         v-if="data.imgURL !== 'null'"
         max-width="100px"
         :src="data.imgURL"
+        @click="$emit('overlay', data.imgURL)"
       ></v-img>
       <v-avatar v-else tile size="100" class="ma-0" color="grey"> </v-avatar>
       <div class="d-flex flex-column justify-space-between pl-2">
@@ -76,10 +87,13 @@
 <script>
 import { mapGetters } from "vuex";
 import ChipPop from "@/components/Chips/ChipPop.vue";
+import IconRarity from "@/components/Icons/IconRarity.vue";
+
 export default {
   name: "CardPop",
   components: {
     ChipPop,
+    IconRarity,
   },
   props: {
     data: {
@@ -94,9 +108,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    loadingFavorite: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
-    return {};
+    return {
+    };
   },
   computed: {
     ...mapGetters("auth", ["isLoggedIn", "isEmailVerified"]),
@@ -109,8 +128,16 @@ export default {
       },
     },
     cardSubtitle() {
-      return this.data.rarity + ', ' + this.data.setNumber + '/' + this.data.totalSetNumber + ' - ' + this.data.setName
-    }
+      return (
+        this.data.rarity +
+        ", " +
+        this.data.setNumber +
+        "/" +
+        this.data.totalSetNumber +
+        " - " +
+        this.data.setName
+      );
+    },
   },
   mounted() {},
   methods: {

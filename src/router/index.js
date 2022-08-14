@@ -8,11 +8,12 @@ Vue.use(VueRouter)
 const routes = [
 	{
 		path: '/',
-		name: 'Home',
-		component: () => import(/* webpackChunkName: "Home" */ '@/views/Home/Home.vue'),
-		meta: {
-			title: "Home"
-		}
+		redirect: '/pca'
+		// name: 'Home',
+		// component: () => import(/* webpackChunkName: "Home" */ '@/views/Home/Home.vue'),
+		// meta: {
+		// 	title: "Home"
+		// }
 	},
 	{
 		path: '/pca',
@@ -64,7 +65,7 @@ const routes = [
 		meta: {
 			title: "Notifications",
 			requiredAuth: true,
-			requiredMailVerified: true
+			requiredMailVerified: false
 		}
 	},
 	{
@@ -88,7 +89,7 @@ const routes = [
 		},
 	},
 	{
-		path: '*',
+		path: '/*',
 		redirect: 'error',
 	},
 ]

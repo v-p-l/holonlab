@@ -103,7 +103,7 @@ export default {
       populationsHistory: [],
       breadcrumbsItems: [
         {
-          text: "Cartes",
+          text: "Liste des cartes",
           exact: true,
           disabled: false,
           to: { name: "Cards" },

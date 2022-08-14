@@ -14,7 +14,7 @@
       @click="updateVerifyEmailDialog(true)"
       >vérifier votre email</a
     >
-    pour accéder à certaines fonctionnalités.
+    pour accéder à certaines fonctionnalités (les favoris par exemple).
   </v-alert>
 </template>
 
