@@ -1,62 +1,35 @@
 <template>
   <div class="d-flex flex-column" style="width: 100%">
-    <!-- Overlay -->
-    <v-overlay :absolute="absolute" :opacity="opacity" :value="overlay" div class="d-flex flex-row justify-center" style="position: fixed; width: 100%;">
-      <div class="d-flex flex-column justify-center align-center">
-        <v-btn color="primary" @click="overlay = false" class="mb-4">
-          Hide Overlay
-        </v-btn>
-        <v-img :src="overlayImgURL" min-width="300px" max-width="400px"></v-img>
-      </div>
-    </v-overlay>
-    <!-- Search bar and filters -->
-    <div class="d-flex flex-row mb-6">
+    <!-- Search bar -->
+    <div class="d-flex flex-row justify-center mb-4">
       <SearchBar
         :loading="queryLoading"
         @searchChange="handleSearchChange"
-        class="mr-4"
+        :style="$vuetify.breakpoint.smAndDown ? 'max-width: 305px' : 'max-width: 500px'"
       ></SearchBar>
-      <ButtonFilters
-        :areFiltersActive="
-          Object.values(filters).some((x) => x !== null && x !== '')
-        "
-        @filtersChange="handleGetCards"
-      >
-        <template v-slot:rarity>
-          <v-list-item class="mb-2">
-            <div class="d-flex flex-column" style="width: 100%">
-              <div class="caption">Rareté</div>
-              <v-select
-                v-model="filters.rarity"
-                :items="rarityOptions"
-                label=""
-                hide-details
-                outlined
-                flat
-                dense
-                clearable
-              ></v-select>
-            </div>
-          </v-list-item>
-        </template>
-        <template v-slot:set>
-          <v-list-item class="mb-4">
-            <div class="d-flex flex-column" style="width: 100%">
-              <div class="caption">Extension</div>
-              <v-select
-                v-model="filters.setName"
-                :items="setNameOptions"
-                label=""
-                hide-details
-                outlined
-                flat
-                dense
-                clearable
-              ></v-select>
-            </div>
-          </v-list-item>
-        </template>
-      </ButtonFilters>
+    </div>
+    <!-- Filters -->
+    <div class="d-flex flex-row justify-center flex-wrap mb-4" style="gap: 16px">
+      <v-select
+        v-model="filters.rarity"
+        :items="rarityOptions"
+        label="Rareté"
+        outlined
+        dense
+        clearable
+        hide-details
+        style="max-width: 305px"
+      ></v-select>
+      <v-select
+        v-model="filters.setName"
+        :items="setNameOptions"
+        label="Extension"
+        outlined
+        dense
+        clearable
+        hide-details
+        style="max-width: 305px"
+      ></v-select>
     </div>
     <!-- Cards -->
     <div v-if="loading" class="d-flex flex-row justify-center">
@@ -76,7 +49,6 @@
         showLastUpdate
         :loadingFavorite="loadingFavorite"
         @actionFavorite="handleFavorite"
-        @overlay="handleOverlay"
       ></CardPop>
     </div>
     <!-- Load more -->
@@ -105,7 +77,6 @@ import {
 } from "firebase/firestore";
 import { mapActions } from "vuex";
 import SearchBar from "@/components/SearchBar/SearchBar.vue";
-import ButtonFilters from "@/components/Buttons/ButtonFilters.vue";
 import IconLoading from "@/components/Icons/IconLoading.vue";
 import CardPop from "@/components/Cards/CardPop.vue";
 import ButtonDefault from "@/components/Buttons/ButtonDefault.vue";
@@ -114,7 +85,6 @@ export default {
   name: "Cards",
   components: {
     SearchBar,
-    ButtonFilters,
     IconLoading,
     CardPop,
     ButtonDefault,
@@ -172,10 +142,6 @@ export default {
         "D&P Éveil des Légendes",
         "D&P Tempête",
       ],
-      absolute: true,
-      opacity: 0.7,
-      overlay: false,
-      overlayImgURL: "",
     };
   },
   computed: {
@@ -371,10 +337,6 @@ export default {
       } finally {
         this.loadingFavorite = false;
       }
-    },
-    handleOverlay(value) {
-      this.overlayImgURL = value;
-      this.overlay = true;
     },
   },
   watch: {

@@ -30,7 +30,6 @@ export default new Vuetify({
 				warning: '#FFC107',
 				background: '#28243D',
 				cards: '#312D4B',
-				//cards: 312D4B
 			},
 		},
 		icons: {

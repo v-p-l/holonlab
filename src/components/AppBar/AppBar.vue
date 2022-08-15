@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app flat color="background">
+  <v-app-bar app flat color="transparent">
     <v-app-bar-nav-icon
       v-if="$vuetify.breakpoint.smAndDown"
       class="mr-2"

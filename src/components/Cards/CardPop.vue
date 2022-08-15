@@ -1,43 +1,38 @@
 <template>
-  <v-card min-width="250px" max-width="320px" color="cards">
-    <div class="d-flex flex-row py-2 px-4">
-      <div class="d-flex flex-column flex-grow-1">
-        <div class="d-flex flex-row justify-space-between align-center">
-          <v-card-title class="pa-0">{{
-            data.name.length > 25 ? data.name.slice(0, 22) + "..." : data.name
-          }}</v-card-title>
-          <v-btn
-            :disabled="!isLoggedIn || !isEmailVerified || loadingFavorite"
-            small
-            icon
-            @click="emitFavorite()"
-          >
-            <v-icon :color="isFavorite ? 'red' : ''"
-              >mdi-{{ isFavorite ? "heart" : "heart-outline" }}</v-icon
-            >
-          </v-btn>
-        </div>
-        <div class="d-flex flex-row align-center" style="gap: 4px">
-          <IconRarity :rarity="data.rarity"></IconRarity>
-          <div class="caption">
-            {{
-              data.setNumber + "/" + data.totalSetNumber + ", " + data.setName
-            }}
-          </div>
+  <v-card
+    max-width="305"
+    color="cards"
+    hover
+    :to="'/pca/' + data.id"
+    class="pa-3"
+  >
+    <div
+      class="d-flex flex-row subtitle-1 font-weight-medium"
+      style="line-height: 1"
+    >
+      {{ data.name }}
+    </div>
+    <div class="d-flex flex-row justify-space-between mb-2">
+      <div class="caption">
+        {{ data.setName }}
+      </div>
+      <div class="d-flex flex-row align-center" style="gap: 4px">
+        <IconRarity :rarity="data.rarity"></IconRarity>
+        <div class="caption">
+          {{ data.setNumber + "/" + data.totalSetNumber }}
         </div>
       </div>
     </div>
-    <div class="d-flex flex-row flex-nowrap px-4 pb-4">
+    <div class="d-flex flex-row" style="gap: 8px">
       <v-img
         v-if="data.imgURL !== 'null'"
+        max-height="137.5px"
         max-width="100px"
         :src="data.imgURL"
-        @click="$emit('overlay', data.imgURL)"
       ></v-img>
-      <v-avatar v-else tile size="100" class="ma-0" color="grey"> </v-avatar>
-      <div class="d-flex flex-column justify-space-between pl-2">
+      <div class="d-flex flex-column justify-space-between">
         <div
-          class="d-flex flex-row justify-space-between flex-wrap mb-2"
+          class="d-flex flex-row flex-wrap"
           style="gap: 4px"
         >
           <ChipPop
@@ -47,7 +42,18 @@
             :value="pop.value"
           ></ChipPop>
         </div>
-        <div class="d-flex flex-row justify-space-between align-center">
+        <div class="d-flex flex-row justify-end">
+          <v-btn
+            :disabled="!isLoggedIn || !isEmailVerified || loadingFavorite"
+            icon
+            @click.prevent="emitFavorite()"
+          >
+            <v-icon :color="isFavorite ? 'red' : ''"
+              >mdi-{{ isFavorite ? "heart" : "heart-outline" }}</v-icon
+            >
+          </v-btn>
+        </div>
+        <!-- <div class="d-flex flex-row justify-space-between align-center">
           <div
             v-if="showLastUpdate"
             class="d-flex flex-row justify-end align-center"
@@ -79,7 +85,7 @@
             </template>
             <span>Détails</span>
           </v-tooltip>
-        </div>
+        </div> -->
       </div>
     </div>
   </v-card>
@@ -114,8 +120,7 @@ export default {
     },
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapGetters("auth", ["isLoggedIn", "isEmailVerified"]),
