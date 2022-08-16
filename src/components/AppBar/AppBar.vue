@@ -3,7 +3,7 @@
     <v-app-bar-nav-icon
       v-if="$vuetify.breakpoint.smAndDown"
       class="mr-2"
-      @click="updateNavBar()"
+      @click="updateNavBar(!showNavBar)"
     ></v-app-bar-nav-icon>
     <Logo v-if="$vuetify.breakpoint.smAndDown"></Logo>
     <v-spacer></v-spacer>
@@ -39,6 +39,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isLoggedIn"]),
+    ...mapGetters("utilities", ["showNavBar"]),
   },
   methods: {
     ...mapMutations("utilities", ["updateNavBar"]),

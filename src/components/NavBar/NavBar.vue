@@ -3,7 +3,7 @@
     app
     v-model="drawer"
     :permanent="$vuetify.breakpoint.mdAndUp"
-    :temporary="$vuetify.breakpoint.smAndDown || !showNavBar"
+    :temporary="$vuetify.breakpoint.smAndDown"
     hide-overlay
     floating
     color="background"
@@ -128,16 +128,20 @@ export default {
         return this.showNavBar;
       },
       set(value) {
-        if (value === this.drawer) {
-          return;
-        } else {
-          this.updateNavBar();
-        }
+        return value !== this.drawer ? this.updateNavBar(value) : false
       },
     },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown;
+    }
   },
   methods: {
     ...mapMutations("utilities", ["updateNavBar"]),
   },
+  watch: {
+    isMobile(newValue) {
+      if (newValue) this.updateNavBar(false)
+    }
+  }
 };
 </script>

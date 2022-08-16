@@ -1,6 +1,6 @@
 const getDefaultState = () => {
   return {
-		showNavBar: true,
+		showNavBar: false,
 		darkMode: false,
   }
 }
@@ -9,10 +9,10 @@ const utilities = {
 	namespaced: true,
   state: getDefaultState(),
   getters: {
-		showNavBar (state) {
+		showNavBar(state) {
 			return state.showNavBar;
 		},
-		darkMode (state) {
+		darkMode(state) {
 			return state.darkMode;
 		},
   },
@@ -20,15 +20,15 @@ const utilities = {
 		resetState(state) {
 			Object.assign(state, getDefaultState());
 		},
-		updateNavBar (state) {
-			state.showNavBar = !state.showNavBar;
+		updateNavBar(state, bool) {
+			state.showNavBar = bool;
 		},
-		updateDarkMode (state) {
+		updateDarkMode(state) {
 			state.darkMode = !state.darkMode;
 		},
 	},
 	actions: {
-		resetGlobalState (context) {
+		resetGlobalState(context) {
 			context.commit('auth/resetState', null, { root: true })
 			context.commit('dialogs/resetState', null, { root: true })
 		}
