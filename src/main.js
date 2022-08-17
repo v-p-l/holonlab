@@ -17,7 +17,7 @@ Vue.prototype.$api = axios;
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// If on localhost, use all firebase services locally
+// If on localhost, we can use all firebase services locally
 // import { getAuth, connectAuthEmulator } from "firebase/auth";
 // import { connectFirestoreEmulator } from "firebase/firestore";
 // if (location.hostname === 'localhost') {
