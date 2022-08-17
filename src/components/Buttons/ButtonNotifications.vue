@@ -28,7 +28,7 @@
           <v-divider :key="`divider-${i}`"></v-divider>
           <v-list-item
             v-if="item.type === 'Nouvelles populations'"
-            :to="item.redirectURL"
+            :to="'/pca/' + item.cardId"
             :key="`item-${i}`"
             class="py-2"
           >

@@ -71,9 +71,11 @@ export default {
           }
         )
         .then((res) => {
+          console.log(res)
           return res.data;
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           throw "Error while submiting file.";
         });
     },
