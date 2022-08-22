@@ -59,6 +59,7 @@ export default {
     async handleSignOut() {
       try {
         await this.$store.dispatch("auth/signOutUser");
+        this.$router.go();
       } catch (err) {
         console.log(err);
       }

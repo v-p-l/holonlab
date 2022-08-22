@@ -19,8 +19,18 @@
         <IconLoading v-if="loading" class="ml-2"></IconLoading>
       </v-btn>
       <div class="mb-4">{{ response }}</div>
-      <v-btn :loading="loadingUpdate" color="primary" @click="updateCards()"
+      <!-- <v-btn
+        :loading="loadingUpdate"
+        color="primary"
+        class="mb-4"
+        @click="updateCards()"
         >Update cards</v-btn
+      >
+      <v-btn :loading="loadingTask" class="mb-4" color="primary" @click="testTask()"
+        >Launch tasks test</v-btn
+      > -->
+      <v-btn :loading="loadingTest" class="mb-4" color="primary" @click="test()"
+        >Test</v-btn
       >
     </div>
   </div>
@@ -37,7 +47,9 @@ export default {
   data() {
     return {
       loading: false,
-      loadingUpdate: false,
+      loadingTest: false,
+      // loadingUpdate: false,
+      // loadingTask: false,
       file: null,
       response: "",
     };
@@ -60,16 +72,12 @@ export default {
       const token = await getIdToken(auth.currentUser);
 
       return this.$api
-        .post(
-          "/addCards",
-          file,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: token,
-            },
-          }
-        )
+        .post("/importCardsFromJSON", file, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: token,
+          },
+        })
         .then((res) => {
           return res.data;
         })
@@ -77,22 +85,94 @@ export default {
           throw "Error while submiting file.";
         });
     },
-    updateCards() {
-      this.loadingUpdate = true;
+    test() {
+      this.loadingTest = true;
 
       return this.$api
-        .get(
-          "/updateCardsPopulations"
-        )
+        .get("/updateAllCardsWithTasks")
         .then((res) => {
           console.log(res);
-          this.loadingUpdate = false;
         })
         .catch((err) => {
           console.log(err);
-          this.loadingUpdate = false;
+        })
+        .finally(() => {
+          this.loadingTest = false;
         });
     },
+    // updateCards() {
+    //   this.loadingUpdate = true;
+
+    //   return this.$api
+    //     .get("/updateCardsPopulations")
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.loadingUpdate = false;
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       this.loadingUpdate = false;
+    //     });
+    // },
+    // testTask() {
+    //   this.loadingTask = true;
+
+    //   return this.$api
+    //     .get("/launchTasksTest")
+    //     .then((res) => {
+    //       console.log(res);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     })
+    //     .finally(() => {
+    //       this.loadingTask = false;
+    //     });
+    // },
+    // test() {
+    //   this.loadingDB = true;
+
+    //   return this.$api
+    //     .post("/tasksTesto", {"data":"35"}, {
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     })
+    //     .finally(() => {
+    //       this.loadingDB = false;
+    //     });
+    // },
+    // async task() {
+    //   this.loadingTask = true;
+
+    //   const auth = getAuth();
+    //   const token = await getIdToken(auth.currentUser);
+
+    //   const data = { test: "oui" }
+
+    //   return this.$api
+    //     .post("/tasksTest", data, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: token,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     })
+    //     .finally(() => {
+    //       this.loadingTask = false;
+    //     });
+    // },
   },
 };
 </script>

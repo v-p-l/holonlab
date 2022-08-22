@@ -30,6 +30,7 @@
         max-width="100px"
         :src="data.imgURL"
       ></v-img>
+      <div v-else style="height: 137.5px; width: 100px;"></div>
       <div class="d-flex flex-column justify-space-between">
         <div
           class="d-flex flex-row flex-wrap"

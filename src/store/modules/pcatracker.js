@@ -186,9 +186,6 @@ const pcatracker = {
 
 			if (docSnap.exists()) {
 				return docSnap.data().newNotificationsCount;
-			} else {
-				// doc.data() will be undefined in this case
-				console.log("No such document!");
 			}
 		},
 		async setNewNotificationsToFalse({ rootGetters }, payload) {

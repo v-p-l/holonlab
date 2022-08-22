@@ -18,13 +18,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // If on localhost, use all firebase services locally
-// import { getAuth, connectAuthEmulator } from "firebase/auth";
-// import { connectFirestoreEmulator } from "firebase/firestore";
-// if (location.hostname === 'localhost') {
-//   const auth = getAuth();
-//   connectFirestoreEmulator(db, 'localhost', 8088);
-//   connectAuthEmulator(auth, 'http://localhost:9099');
-// }
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { connectFirestoreEmulator } from "firebase/firestore";
+if (location.hostname === 'localhost') {
+  const auth = getAuth();
+  connectFirestoreEmulator(db, 'localhost', 8088);
+  connectAuthEmulator(auth, 'http://localhost:9099');
+}
 
 export default db;
 

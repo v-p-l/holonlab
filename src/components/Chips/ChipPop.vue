@@ -38,29 +38,29 @@ export default {
     gradeColor(grade) {
       switch (grade) {
         case "10+":
-          return "blue darken-2 ";
+          return "blue";
         case "10":
           return "blue";
         case "9.5":
-          return "blue lighten-2";
+          return "blue";
         case "9":
-          return "green darken-2";
+          return "green";
         case "8":
           return "green";
         case "7":
-          return "green lighten-2";
+          return "green";
         case "6":
-          return "orange darken-2";
+          return "orange";
         case "5":
           return "orange";
         case "4":
-          return "orange lighten-2";
+          return "orange";
         case "3":
-          return "red darken-2";
+          return "red";
         case "2":
           return "red";
         case "1":
-          return "red lighten-2";
+          return "red";
         default:
           return "black";
       }

@@ -243,6 +243,7 @@ export default {
       try {
         await this.$store.dispatch("auth/registerWithEmail", credentials);
         this.$store.commit("dialogs/updateLoginDialog", false);
+        this.$router.go();
       } catch (error) {
         this.signUp.loading = false;
         this.signUp.errMsg = error;
@@ -255,6 +256,7 @@ export default {
         await this.$store.dispatch("auth/loginWithEmail", credentials);
         this.login.loading = false;
         this.$store.commit("dialogs/updateLoginDialog", false);
+        this.$router.go();
       } catch (error) {
         this.login.loading = false;
         this.login.errMsg = error;
@@ -264,6 +266,7 @@ export default {
       try {
         await this.$store.dispatch("auth/loginWithGoogle");
         this.$store.commit("dialogs/updateLoginDialog", false);
+        this.$router.go();
       } catch (error) {
         this.login.errMsg = error;
       }
