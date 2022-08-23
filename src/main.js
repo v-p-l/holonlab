@@ -10,10 +10,6 @@ import { getFirestore } from "firebase/firestore";
 import firebaseConfig from "@/plugins/firebase/firebaseConfig";
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-// axios.defaults.baseURL = "http://localhost:5001/holonlab-4e280/us-central1";
-Vue.prototype.$api = axios;
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -24,8 +20,12 @@ if (location.hostname === 'localhost') {
   const auth = getAuth();
   connectFirestoreEmulator(db, 'localhost', 8088);
   connectAuthEmulator(auth, 'http://localhost:9099');
+  axios.defaults.baseURL = "http://localhost:5001/holonlab-4e280/us-central1";
+} else {
+  axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
 }
 
+Vue.prototype.$api = axios;
 export default db;
 
 Vue.use(require('vue-moment'));
