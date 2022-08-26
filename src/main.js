@@ -14,16 +14,16 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // If on localhost, use all firebase services locally
-import { getAuth, connectAuthEmulator } from "firebase/auth";
-import { connectFirestoreEmulator } from "firebase/firestore";
-if (location.hostname === 'localhost') {
-  const auth = getAuth();
-  connectFirestoreEmulator(db, 'localhost', 8088);
-  connectAuthEmulator(auth, 'http://localhost:9099');
-  axios.defaults.baseURL = "http://localhost:5001/holonlab-4e280/us-central1";
-} else {
-  axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-}
+// import { getAuth, connectAuthEmulator } from "firebase/auth";
+// import { connectFirestoreEmulator } from "firebase/firestore";
+// if (location.hostname === 'localhost') {
+//   const auth = getAuth();
+//   connectFirestoreEmulator(db, 'localhost', 8088);
+//   connectAuthEmulator(auth, 'http://localhost:9099');
+//   axios.defaults.baseURL = "http://localhost:5001/holonlab-4e280/us-central1";
+// } else {
+//   axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+// }
 
 Vue.prototype.$api = axios;
 export default db;

@@ -42,14 +42,14 @@
                     justify-center
                     caption
                     text--secondary
-                    mb-2
+                    mb-4
                   "
                 >
                   {{ populations.lastUpdate.seconds | moment("DD/MM, hh:mm") }}
                 </div>
                 <div
                   class="d-flex flex-row justify-center flex-wrap mb-2"
-                  style="gap: 8px"
+                  style="gap: 16px 8px"
                 >
                   <div v-for="(pop, i) in populations.pops" :key="i">
                     <div class="d-flex flex-column" style="position: relative">
@@ -61,10 +61,10 @@
                             0
                         "
                         color="green"
-                        size="16"
-                        style="position: absolute; top: -9px; right: -5px"
+                        size="auto"
+                        style="position: absolute; top: -13px; right: -7px; padding: 3px 3px;"
                       >
-                        <span class="white--text" style="font-size: 10px">
+                        <span class="white--text" style="font-size: 9px;">
                           +{{
                             populationsHistory[index].pops[i].value -
                             populationsHistory[index + 1].pops[i].value
