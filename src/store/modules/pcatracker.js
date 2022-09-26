@@ -119,8 +119,8 @@ const pcatracker = {
 					const q = query(favoritesRef, where("usersFav", "array-contains", userId));
 					const qSnapshot = await getDocs(q);
 
-					if (qSnapshot.docs.length > 4) {
-						throw "Vous ne pouvez pas avoir plus de 5 cartes dans vos favoris"
+					if (qSnapshot.docs.length > 19) {
+						throw "Vous ne pouvez pas avoir plus de 20 cartes dans vos favoris"
 					}
 
 					const updatedUsersFav = cardSnapshot.data().usersFav;

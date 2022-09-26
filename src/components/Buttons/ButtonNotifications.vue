@@ -1,5 +1,5 @@
 <template>
-  <v-menu offset-y bottom left min-width="250" max-width="250">
+  <v-menu offset-y bottom left min-width="350" max-width="350">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         v-bind="attrs"

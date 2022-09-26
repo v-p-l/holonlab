@@ -7,7 +7,7 @@
         chaque fois que ses populations sont mises à jour et que de nouvelles
         données sont détectées.
       </p>
-      <p class="mb-4">Vous pouvez ajouter jusqu'à 5 cartes à vos favoris.</p>
+      <p class="mb-4">Vous pouvez ajouter jusqu'à 20 cartes à vos favoris.</p>
       <div
         v-if="!loading"
         class="d-flex flex-row justify-center flex-wrap"
