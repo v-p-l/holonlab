@@ -141,6 +141,9 @@ export default {
         "D&P Aube Majestueuse",
         "D&P Éveil des Légendes",
         "D&P Tempête",
+        "Platine",
+        "Platine Rivaux Émergeants",
+        "Platine Vainqueurs Suprêmes"
       ],
     };
   },
