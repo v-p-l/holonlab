@@ -66,10 +66,19 @@ const pcatracker = {
 
 			// Get collection reference and initialize query
 			const popsRef = collection(db, "cards", cardId, "history");
-			const q = query(popsRef, orderBy("lastUpdate", "desc"), limit(5));
+            let populationsHistory = [];
+
+			const q = query(popsRef, orderBy("lastUpdate", "desc"), limit(3));
 			const popSnapshot = await getDocs(q);
-			let populationsHistory = [];
 			popSnapshot.forEach((doc) => {
+				populationsHistory.push(doc.data());
+			})
+
+			// Get collection reference and initialize query
+            let start = new Date('2022-11-20');
+			const qFix = query(popsRef, where("lastUpdate", ">=", start), limit(1));
+			const popSnapshotFix = await getDocs(qFix);
+			popSnapshotFix.forEach((doc) => {
 				populationsHistory.push(doc.data());
 			})
 
