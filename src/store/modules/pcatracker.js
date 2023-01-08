@@ -75,12 +75,12 @@ const pcatracker = {
 			})
 
 			// Get collection reference and initialize query
-            let start = new Date('2022-11-20');
-			const qFix = query(popsRef, where("lastUpdate", ">=", start), limit(1));
-			const popSnapshotFix = await getDocs(qFix);
-			popSnapshotFix.forEach((doc) => {
-				populationsHistory.push(doc.data());
-			})
+            // let start = new Date('2022-11-20');
+			// const qFix = query(popsRef, where("lastUpdate", ">=", start), limit(1));
+			// const popSnapshotFix = await getDocs(qFix);
+			// popSnapshotFix.forEach((doc) => {
+			// 	populationsHistory.push(doc.data());
+			// })
 
 			return { card, populationsHistory };
 		},

@@ -7,7 +7,7 @@
     ></v-app-bar-nav-icon>
     <Logo v-if="$vuetify.breakpoint.smAndDown"></Logo>
     <v-spacer></v-spacer>
-    <div class="d-flex flex-row align-center" :style="isLoggedIn ? { 'gap': '8px' } : { '': '' }">
+    <div class="d-flex flex-row align-center">
       <ButtonNotifications v-if="isLoggedIn" />
       <ButtonThemeSwitcher />
       <div class="ml-4">

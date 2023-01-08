@@ -4,7 +4,6 @@
       <v-btn
         v-bind="attrs"
         v-on="on"
-        small
         icon
         @click="handleSetNewNotificationsToFalse()"
       >

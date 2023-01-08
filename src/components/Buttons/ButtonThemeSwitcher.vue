@@ -1,6 +1,5 @@
 <template>
   <ButtonDefault
-    small
     :iconOnly="true"
     :icon="darkMode ? 'mdi-weather-sunny' : 'mdi-weather-night'"
     @action="toggleDarkMode()"
