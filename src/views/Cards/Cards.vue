@@ -144,10 +144,10 @@ export default {
         "Platine",
         "Platine Rivaux Émergeants",
         "Platine Vainqueurs Suprêmes",
-        "HearthGold SoulSilver",
+        // "HearthGold SoulSilver",
         "HS Déchaînement",
         "HS Indomptable",
-        "HS Triomphe",
+        // "HS Triomphe",
         "L'Appel des Légendes"
       ],
     };
