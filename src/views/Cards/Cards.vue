@@ -143,7 +143,12 @@ export default {
         "D&P Tempête",
         "Platine",
         "Platine Rivaux Émergeants",
-        "Platine Vainqueurs Suprêmes"
+        "Platine Vainqueurs Suprêmes",
+        "HearthGold SoulSilver",
+        "HS Déchaînement",
+        "HS Indomptable",
+        "HS Triomphe",
+        "L'Appel des Légendes"
       ],
     };
   },
