@@ -106,6 +106,8 @@ export default {
         "EX",
         "Niv.X",
         "Star",
+        "Prime",
+        "Légende",
         "Secrète",
       ],
       setNameOptions: [

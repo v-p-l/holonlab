@@ -23,6 +23,8 @@ export default {
         case "Niv.X":
         case "Secrète":
         case "SL":
+        case "Prime":
+        case "Légende": 
           return "yellow";
         default:
           return "";
@@ -39,6 +41,8 @@ export default {
         case "Star":
         case "Niv.X":
         case "SL":
+        case "Prime":
+        case "Légende": 
           return "star";
         case "Holographique":
           return "star-outline";
