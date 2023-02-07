@@ -5,7 +5,7 @@ import router from "@/router";
 import store from "@/store";
 import vuetify from "@/plugins/vuetify";
 import "@/plugins/toastification";
-import "@/plugins/vercel";
+import { inject } from '@vercel/analytics';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
@@ -15,6 +15,7 @@ import axios from 'axios';
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const analytics = getAnalytics(app);
+inject();
 
 // If on localhost, use all firebase services locally
 // import { getAuth, connectAuthEmulator } from "firebase/auth";
