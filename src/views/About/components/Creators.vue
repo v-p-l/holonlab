@@ -7,7 +7,7 @@
         :href="`https://www.instagram.com/${creator}`" v-for="(creator, index) in creators" :key="index">
         <v-chip class="d-flex flex-row align-center" style="cursor: pointer" color="#E9DDF2">
           <v-icon class="mr-1" color="purple">mdi-instagram</v-icon>
-          <div class="body-2 purple--text">
+          <div class="body-2 black--text">
             {{
               creator
             }}
@@ -22,7 +22,7 @@
           :href="`https://www.instagram.com/holonlab_wid`">
           <v-chip class="d-flex flex-row align-center" style="cursor: pointer" color="#E9DDF2">
             <v-icon class="mr-1" color="purple">mdi-instagram</v-icon>
-            <div class="body-2 purple--text">
+            <div class="body-2 black--text">
               holonlab_wid
             </div>
           </v-chip>

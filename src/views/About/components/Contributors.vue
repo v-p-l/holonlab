@@ -7,7 +7,7 @@
         :href="`https://www.instagram.com/${contributor}`" v-for="(contributor, index) in contributors" :key="index">
         <v-chip class="d-flex flex-row align-center" style="cursor: pointer" color="#E9DDF2">
           <v-icon class="mr-1" color="purple">mdi-instagram</v-icon>
-          <div class="body-2 purple--text">
+          <div class="body-2 black--text">
             {{
               contributor
             }}
@@ -23,7 +23,7 @@ export default {
   name: "Contributors",
   data() {
     return {
-      contributors: ["poke_maniiak", "maximeanothertime"]
+      contributors: ["poke_maniiak", "maximeanothertime", "sharepkm", "valckior84", "thefrenchplatinum", "rb_corral"]
     };
   },
 };
