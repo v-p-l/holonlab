@@ -1,22 +1,19 @@
 <template>
-  <v-card color="cards">
+  <v-card color="cards" class="pb-4">
     <v-card-title>Contributeurs</v-card-title>
-    <v-card-text
-      >Liste des contributeurs qui ont participé à la recherche des numéros de
-      certification des cartes. 🐳</v-card-text
-    >
-    <div class="d-flex flex-row flex-wrap px-4 pb-2" style="gap: 8px">
-      <div
-        class="d-flex flex-row align-center mb-2"
-        v-for="(contributor, index) in contributors"
-        :key="index"
-      >
-        <v-icon class="mr-1" color="#7085D5">mdi-discord</v-icon>
-        <div class="body-2">
-          {{ contributor.discordName
-          }}<span style="color: #b9bbbe">{{ contributor.discordNumber }}</span>
-        </div>
-      </div>
+    <v-card-text class="pb-2">Merci aux collectionneurs qui ont participé aux partages des numéros de certification des cartes 👑</v-card-text>
+    <div class="d-flex flex-row flex-wrap px-4" style="gap: 8px">
+      <a class="body-2 white--text" style="text-decoration: none;" target="_blank" rel="noopener noreferrer"
+        :href="`https://www.instagram.com/${contributor}`" v-for="(contributor, index) in contributors" :key="index">
+        <v-chip class="d-flex flex-row align-center" style="cursor: pointer" color="#E9DDF2">
+          <v-icon class="mr-1" color="purple">mdi-instagram</v-icon>
+          <div class="body-2 purple--text">
+            {{
+              contributor
+            }}
+          </div>
+        </v-chip>
+      </a>
     </div>
   </v-card>
 </template>
@@ -26,32 +23,7 @@ export default {
   name: "Contributors",
   data() {
     return {
-      contributors: [
-        {
-          discordName: "akselvb",
-          discordNumber: "#0736",
-        },
-        {
-          discordName: "Hydra",
-          discordNumber: "#8753",
-        },
-        {
-          discordName: "Rod",
-          discordNumber: "#9373",
-        },
-        {
-          discordName: "Spex",
-          discordNumber: "#4105",
-        },
-        {
-          discordName: "2UU",
-          discordNumber: "#8376",
-        },
-        {
-          discordName: "Botsaa",
-          discordNumber: "#3100",
-        },
-      ],
+      contributors: ["poke_maniiak", "maximeanothertime"]
     };
   },
 };

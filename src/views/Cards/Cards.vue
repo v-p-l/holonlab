@@ -108,6 +108,7 @@ export default {
         "Star",
         "Prime",
         "Légende",
+        "SL",
         "Secrète",
       ],
       setNameOptions: [
