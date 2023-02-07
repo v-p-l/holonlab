@@ -5,13 +5,16 @@ import router from "@/router";
 import store from "@/store";
 import vuetify from "@/plugins/vuetify";
 import "@/plugins/toastification";
+import "@/plugins/vercel";
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import firebaseConfig from "@/plugins/firebase/firebaseConfig";
 import axios from 'axios';
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
 // If on localhost, use all firebase services locally
 // import { getAuth, connectAuthEmulator } from "firebase/auth";
@@ -38,5 +41,6 @@ new Vue({
   store,
   vuetify,
   db,
+  analytics,
   render: h => h(App)
 }).$mount('#app')
