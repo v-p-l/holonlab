@@ -103,6 +103,7 @@ export default {
         "Peu commune",
         "Rare",
         "Holographique",
+        "Holo Deck",
         "EX",
         "Niv.X",
         "Star",

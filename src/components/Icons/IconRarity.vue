@@ -17,6 +17,7 @@ export default {
         case "Peu commune":
         case "Rare":
         case "Holographique":
+        case "Holographique (deck)":
           return "";
         case "EX":
         case "Star":
@@ -45,6 +46,7 @@ export default {
         case "Légende": 
           return "star";
         case "Holographique":
+        case "Holographique (deck)":
           return "star-outline";
         case "Secrète":
           return "star-shooting";
