@@ -23,7 +23,7 @@ export default {
   name: "Contributors",
   data() {
     return {
-      contributors: ["poke_maniiak", "maximeanothertime", "sharepkm", "valckior84", "thefrenchplatinum", "rb_corral"]
+      contributors: ["poke_maniiak", "maximeanothertime", "sharepkm", "valckior84", "thefrenchplatinum", "rb_corral", "spok________"]
     };
   },
 };
