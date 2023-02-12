@@ -37,7 +37,7 @@ export default {
   name: "Creators",
   data() {
     return {
-      creators: ["aks_poke", "saa.poke", "pokeswag21", "hydra_loves_sneasel", "hugokemon"]
+      creators: ["aks_poke", "saa.poke", "pokeswag21", "hydra_loves_sneasel", "hugokemon", "_rodinet_"]
     };
   },
 };
