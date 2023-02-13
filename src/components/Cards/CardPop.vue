@@ -1,12 +1,12 @@
 <template>
-  <v-card max-width="305" color="cards" hover :to="'/pca/' + data.id" class="pa-3">
+  <v-card max-width="350" color="cards" hover :to="'/pca/' + data.id" class="pa-3">
     <div class="d-flex flex-row justify-space-between mb-1">
       <div class="subtitle-1 font-weight-medium" style="line-height: 1">{{ data.name }}</div>
       <div class="caption" style="line-height: 1">{{ data.rarity }}</div>
     </div>
     <div class="body-2 text--secondary mb-2">
-        {{ data.setNumber + "/" + data.totalSetNumber + ', ' + data.setName }}
-      </div>
+      {{ data.setNumber + "/" + data.totalSetNumber + ', ' + data.setName }}
+    </div>
     <div class="d-flex flex-row" style="gap: 8px">
       <v-img v-if="data.imgURL !== 'null'" max-height="137.5px" max-width="100px" :src="data.imgURL"></v-img>
       <div v-else style="height: 137.5px; width: 100px;"></div>
@@ -14,7 +14,17 @@
         <div class="d-flex flex-row flex-wrap" style="gap: 4px">
           <ChipPop v-for="(pop, i) in data.pops" :key="i" :grade="pop.grade" :value="pop.value"></ChipPop>
         </div>
-        <div class="d-flex flex-row justify-end">
+        <div class="d-flex flex-row justify-space-between align-center flex-wrap mt-4">
+          <div class="d-flex flex-row flex-wrap" style="gap: 4px">
+            <v-btn depressed small @click.prevent="goToPca(data)">
+              <span>PCA</span>
+              <v-icon right>mdi-open-in-new</v-icon>
+            </v-btn>
+            <v-btn depressed small @click.prevent="goToEbay(data)">
+              <span>Ebay</span>
+              <v-icon right>mdi-open-in-new</v-icon>
+            </v-btn>
+          </div>
           <v-btn :disabled="!isLoggedIn || !isEmailVerified || loadingFavorite" icon @click.prevent="emitFavorite()">
             <v-icon :color="isFavorite ? 'red' : ''">mdi-{{ isFavorite? "heart": "heart-outline" }}</v-icon>
           </v-btn>
@@ -113,6 +123,14 @@ export default {
     emitFavorite() {
       this.$emit("actionFavorite", this.data.id);
     },
+    goToPca(data) {
+      let route = `https://pcagrade.com/en/verif/${data.certificationRef}`;
+      window.open(route);
+    },
+    goToEbay(data) {
+      let route = `https://www.ebay.fr/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=${data.name}+${data.setNumber}%2F${data.totalSetNumber}+${data.setName}&_sacat=0`
+      window.open(route);
+    }
   },
 };
 </script>
