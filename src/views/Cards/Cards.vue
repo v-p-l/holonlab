@@ -111,6 +111,8 @@ export default {
         "Légende",
         "SL",
         "Secrète",
+        "High-Tech",
+        "Full-Art"
       ],
       setNameOptions: [
         "Set de base",
@@ -152,7 +154,19 @@ export default {
         "HS Déchaînement",
         "HS Indomptable",
         "HS Triomphe",
-        "L'Appel des Légendes"
+        "L'Appel des Légendes",
+        "Noir & Blanc",
+        "N&B Pouvoirs Emergents",
+        "N&B Nobles Victoires",
+        "N&B Destinées Futures",
+        "N&B Explorateurs Obscurs",
+        "N&B Dragons Exaltés",
+        "N&B Frontières Franchies",
+        "N&B Tempête Plasma",
+        "N&B Glaciation Plasma",
+        "N&B Explosion Plasma",
+        "Black Star Nintendo",
+        "Black Star DP"
       ],
     };
   },

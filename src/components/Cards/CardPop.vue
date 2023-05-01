@@ -128,7 +128,8 @@ export default {
       window.open(route);
     },
     goToEbay(data) {
-      let route = `https://www.ebay.fr/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=${data.name}+${data.setNumber}%2F${data.totalSetNumber}+${data.setName}&_sacat=0`
+      let newSetName = data.setName.replace(/&/g,"");
+      let route = `https://www.ebay.fr/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=${data.name}+${data.setNumber}%2F${data.totalSetNumber}+${newSetName}&_sacat=0`
       window.open(route);
     }
   },
